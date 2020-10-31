@@ -260,3 +260,42 @@ GROUP BY sellable;
 
 SELECT COUNT(book_id), SUM(if(year < 1949, 1, 0)) AS 'Menor1949' /* Sum condicional if usada como contador*/
 FROM BOOKS
+
+SELECT COUNT(book_id)
+FROM books
+WHERE year <= 1950;
+
+/* Condicionales */
+
+SELECT COUNT(book_id),
+    SUM(if(year <= 1950, 1, 0)) AS 'Menos1950',
+    SUM(if(year >= 1950 AND year < 1990, 1, 0)) AS 'Menor1990',
+    SUM(if(year >= 1990 AND year < 2000, 1,0 )) AS 'Menor2000',
+    SUM(if(year >= 2000, 1, 0)) AS 'MenosHoje'
+FROM books;
+
+SELECT nationality, COUNT(book_id), 
+    SUM(if(year < 1950, 1, 0)) AS 'menos1950',
+    SUM(if(year >= 1950 and year < 1990, 1, 0)) AS 'menor1990',
+    SUM(if(year >= 1990 and year < 2000, 1, 0)) AS 'menor2000',
+    SUM(if(year >= 2000, 1, 0)) AS 'hoje'
+FROM books as b
+    JOIN authors as a
+    ON a.author_id = b.author_id
+WHERE a.nationality is NOT NULL
+    GROUP BY nationality;
+
+SHOW pruebaplatzi;
+
+DESC authors;
+
+alter table authors add column birthyear integer default 1930 after name;
+
+ALTER TABLE authors 
+MODIFY column birthyear year default 1950;
+
+ALTER TABLE authors 
+DROP column birthyear;
+
+SHOW tables LIKE '%i%'; /* El LIKE se puede usar en TABLEs y DATABASEs*/
+
